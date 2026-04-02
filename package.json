@@ -1,20 +1,28 @@
 {
   "name": "voting-chain",
+  "version": "1.0.0",
   "private": true,
+  "description": "Blockchain-based voting system using Turborepo",
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:clean": "bash scripts/kill-port.sh 3001 && turbo run dev",
+    "build": "turbo run build",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "clean": "turbo run clean",
+    "test": "turbo run test",
+    "kill-ports": "bash scripts/kill-port.sh 3001"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.3",
-    "typescript": "5.9.2"
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.3"
   },
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@8.15.0",
   "engines": {
-    "node": ">=18"
-  }
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
