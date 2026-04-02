@@ -1,124 +1,30 @@
-# Blockchain-Based Election Voting System
+# Voting Chain - Blockchain-Based Election Voting System
 
-A secure, transparent, and decentralized election voting system built with a custom blockchain implementation. This system ensures vote integrity, voter authentication, and result transparency while maintaining voter anonymity.
+A secure, transparent, and decentralized election voting system built with a custom blockchain implementation. This system ensures vote integrity, voter authentication, and result transparency while maintaining voter anonymity through Role-Based Access Control (RBAC) and cryptographic security.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue.svg)
-![Status](https://img.shields.io/badge/status-complete-success.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)
+![Status](https://img.shields.io/badge/status-production--ready-success.svg)
 
-## ✅ Implementation Status: 100% Complete
+## 🌟 Key Features
 
-**All features have been fully implemented and are production-ready!**
-
-- ✅ Custom Blockchain with Proof-of-Work
-- ✅ Complete Express REST API
-- ✅ Full React Frontend with all pages
-- ✅ Real-time WebSocket updates
-- ✅ JWT Authentication system
-- ✅ Vote casting and verification
-- ✅ Blockchain explorer
-- ✅ Results dashboard
-- ✅ Election management
-
-See [PAGES_IMPLEMENTATION_COMPLETE.md](./PAGES_IMPLEMENTATION_COMPLETE.md) for detailed page implementations.
-
-## 🌟 Features
-
-### Core Features
-- ✅ **Custom Blockchain**: Proof-of-work implementation with SHA-256 hashing
-- 🔐 **Secure Authentication**: JWT-based voter authentication with bcrypt password hashing
-- 🗳️ **Election Management**: Create and manage elections with multiple candidates
-- 📊 **Real-time Results**: Live vote counting with WebSocket updates
-- 🔍 **Blockchain Explorer**: View and verify all blocks and votes
-- 🎫 **Vote Receipts**: Cryptographic proof of vote submission
-- 🕵️ **Voter Anonymity**: Hashed voter IDs in blockchain for privacy
-- ⛓️ **Immutable Records**: Tamper-proof vote storage
-- 🚫 **Double-Vote Prevention**: One vote per voter per election
-
-### Technical Features
-- 📦 **Monorepo Architecture**: Turborepo for efficient development
-- 🔄 **Real-time Updates**: WebSocket integration for live data
-- 🎨 **Modern UI**: React with Vite for fast development
-- 🛡️ **Type Safety**: Full TypeScript implementation
-- 🔌 **RESTful API**: Express.js backend with comprehensive endpoints
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐
-│  React Frontend │
-│   (Vite + TS)   │
-└────────┬────────┘
-         │
-         │ HTTP/WebSocket
-         │
-┌────────▼────────┐
-│   Express API   │
-│  Authentication │
-│  Vote Management│
-└────────┬────────┘
-         │
-         │
-┌────────▼────────┐
-│   Blockchain    │
-│  Proof-of-Work  │
-│  Chain Validation│
-└─────────────────┘
-```
-
-## 📁 Project Structure
-
-```
-voting-chain/
-├── apps/
-│   ├── api/                    # Express API server
-│   │   ├── src/
-│   │   │   ├── routes/         # API endpoints
-│   │   │   ├── controllers/    # Business logic
-│   │   │   ├── middleware/     # Auth & validation
-│   │   │   ├── services/       # Core services
-│   │   │   └── server.ts       # Entry point
-│   │   └── package.json
-│   │
-│   └── web/                    # React frontend
-│       ├── src/
-│       │   ├── components/     # UI components
-│       │   ├── pages/          # Page views
-│       │   ├── services/       # API clients
-│       │   └── main.tsx        # Entry point
-│       └── package.json
-│
-├── packages/
-│   ├── blockchain/             # Blockchain core
-│   │   ├── src/
-│   │   │   ├── Block.ts        # Block implementation
-│   │   │   └── Blockchain.ts   # Chain management
-│   │   └── package.json
-│   │
-│   ├── types/                  # Shared TypeScript types
-│   │   └── src/
-│   │       ├── election.ts
-│   │       ├── voter.ts
-│   │       └── vote.ts
-│   │
-│   └── ui/                     # Shared UI components
-│       └── src/
-│           ├── Button.tsx
-│           └── Card.tsx
-│
-├── ARCHITECTURE.md             # System architecture details
-├── IMPLEMENTATION_GUIDE.md     # Code examples & patterns
-├── SETUP_GUIDE.md             # Setup instructions
-└── package.json
-```
+- **🔗 Blockchain-Based Vote Recording** - Immutable and tamper-proof vote storage using custom blockchain implementation
+- **🔐 Role-Based Access Control (RBAC)** - Comprehensive permission system with Admin, Election Officer, and Voter roles
+- **📊 Real-Time Election Monitoring** - Live vote counting and results with WebSocket updates
+- **🛡️ Secure Authentication** - JWT-based authentication with bcrypt password hashing
+- **📝 Comprehensive Audit Logging** - Track all system actions for transparency and accountability
+- **🔍 Blockchain Explorer** - View and verify all blocks and votes in the chain
+- **🎫 Vote Receipts** - Cryptographic proof of vote submission for verification
+- **🚫 Double-Vote Prevention** - Ensures one vote per voter per election
+- **🕵️ Voter Anonymity** - Hashed voter IDs in blockchain for privacy protection
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js >= 18
-- pnpm >= 9.0.0
+- **Node.js** >= 18.0.0
+- **pnpm** >= 8.0.0
 
 ### Installation
 
@@ -142,15 +48,137 @@ The application will be available at:
 - **Frontend**: http://localhost:5173
 - **API**: http://localhost:3001
 
-## 📚 Documentation
+For detailed setup instructions, see the [Setup Guide](./SETUP_GUIDE.md) and [Frontend Setup Guide](./FRONTEND_SETUP.md).
 
-- **[Architecture Guide](./ARCHITECTURE.md)** - System design, components, and data flow
-- **[Implementation Guide](./IMPLEMENTATION_GUIDE.md)** - Detailed code examples and patterns
-- **[Setup Guide](./SETUP_GUIDE.md)** - Complete setup and deployment instructions
+## 📚 Documentation Index
+
+Comprehensive documentation is available for all aspects of the system:
+
+### Setup & Configuration
+- **[Setup Guide](./SETUP_GUIDE.md)** - Complete installation and configuration instructions
+- **[Frontend Setup](./FRONTEND_SETUP.md)** - Frontend-specific setup and development guide
+
+### Architecture & Design
+- **[Architecture Documentation](./ARCHITECTURE.md)** - System design, components, and data flow
+
+## 📁 Project Structure
+
+This is a monorepo managed by Turborepo and pnpm workspaces:
+
+```
+voting-chain/
+├── apps/
+│   ├── api/                    # Express API Server
+│   │   ├── src/
+│   │   │   ├── routes/         # API endpoints
+│   │   │   ├── middleware/     # Auth & RBAC middleware
+│   │   │   ├── services/       # Business logic services
+│   │   │   └── utils/          # Utility functions
+│   │   └── package.json
+│   │
+│   └── web/                    # React Frontend Application
+│       ├── src/
+│       │   ├── components/     # Reusable UI components
+│       │   ├── pages/          # Application pages
+│       │   ├── lib/            # API client & utilities
+│       │   └── store/          # State management
+│       └── package.json
+│
+├── packages/
+│   ├── blockchain/             # Custom Blockchain Implementation
+│   │   ├── src/
+│   │   │   ├── Block.ts        # Block structure
+│   │   │   └── Blockchain.ts   # Chain management
+│   │   └── package.json
+│   │
+│   ├── types/                  # Shared TypeScript Types
+│   │   ├── src/
+│   │   │   ├── election.ts     # Election types
+│   │   │   ├── voter.ts        # Voter types
+│   │   │   ├── vote.ts         # Vote types
+│   │   │   └── api.ts          # API types
+│   │   └── package.json
+│   │
+│   ├── ui/                     # Shared UI Components
+│   │   └── src/
+│   │       ├── button.tsx
+│   │       └── card.tsx
+│   │
+│   ├── eslint-config/          # Shared ESLint Configuration
+│   └── typescript-config/      # Shared TypeScript Configuration
+│
+├── scripts/                    # Utility scripts
+├── turbo.json                  # Turborepo configuration
+├── pnpm-workspace.yaml         # pnpm workspace configuration
+└── package.json                # Root package configuration
+```
+
+### Apps
+
+- **`apps/api`** - Express.js REST API server with JWT authentication, RBAC middleware, and blockchain integration
+- **`apps/web`** - React frontend application built with Vite, featuring real-time updates and responsive UI
+
+### Packages
+
+- **`packages/blockchain`** - Custom blockchain implementation with proof-of-work consensus
+- **`packages/types`** - Shared TypeScript type definitions used across the monorepo
+- **`packages/ui`** - Reusable React UI components
+- **`packages/eslint-config`** - Shared ESLint configuration
+- **`packages/typescript-config`** - Shared TypeScript configuration
+
+## 💻 Technology Stack
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web application framework
+- **TypeScript** - Type-safe JavaScript
+- **JWT** - JSON Web Tokens for authentication
+- **bcrypt** - Password hashing
+- **Socket.io** - Real-time WebSocket communication
+
+### Frontend
+- **React 18** - UI library
+- **Vite** - Build tool and development server
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first CSS framework
+- **Socket.io Client** - Real-time updates
+- **Axios** - HTTP client
+
+### Blockchain
+- **Custom Implementation** - Educational blockchain with proof-of-work
+- **SHA-256** - Cryptographic hashing algorithm
+- **Proof-of-Work** - Consensus mechanism
+
+### Monorepo Tools
+- **Turborepo** - High-performance build system
+- **pnpm** - Fast, disk space efficient package manager
+- **TypeScript** - Shared type definitions
+
+## 🔐 Security Features
+
+### Authentication & Authorization
+- **JWT Authentication** - Secure token-based authentication with configurable expiration
+- **Password Security** - bcrypt hashing with 10 rounds for password storage
+- **Role-Based Access Control (RBAC)** - Three-tier permission system:
+  - **Admin** - Full system access, user management, election creation
+  - **Election Officer** - Election management, candidate registration, results viewing
+  - **Voter** - Vote casting, receipt verification
+
+### Data Protection
+- **Vote Anonymity** - Hashed voter IDs in blockchain to protect voter identity
+- **Immutable Records** - Blockchain prevents vote tampering and ensures data integrity
+- **Double-Vote Prevention** - Database tracking ensures one vote per voter per election
+- **Input Validation** - Comprehensive request validation on all endpoints
+- **CORS Protection** - Configured for specific trusted origins
+
+### Audit & Compliance
+- **Comprehensive Audit Logging** - All system actions are logged with timestamps and user information
+- **Blockchain Verification** - Chain integrity validation ensures no tampering
+- **Vote Receipts** - Cryptographic proof of vote submission for voter verification
 
 ## 🛠️ Development
 
-### Available Commands
+### Available Scripts
 
 ```bash
 # Development
@@ -170,70 +198,98 @@ pnpm lint             # Lint all packages
 
 # Formatting
 pnpm format           # Format code with Prettier
+
+# Testing
+pnpm test             # Run tests (when implemented)
+
+# Utilities
+pnpm kill-ports       # Kill processes on development ports
 ```
 
-### Tech Stack
+### Development Workflow
 
-#### Frontend
-- **React 18** - UI library
-- **Vite** - Build tool and dev server
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **shadcn/ui** - High-quality React components
-- **Socket.io Client** - Real-time updates
-- **Axios** - HTTP client
-- **Recharts** - Data visualization
+1. **Start Development Servers**
+   ```bash
+   pnpm dev
+   ```
 
-#### Backend
-- **Express.js** - Web framework
-- **Node.js** - Runtime environment
-- **Socket.io** - WebSocket server
-- **JWT** - Authentication
-- **bcrypt** - Password hashing
-- **TypeScript** - Type safety
+2. **Make Changes**
+   - Both API and frontend support hot reload
+   - TypeScript compilation happens automatically
+   - Changes are reflected immediately
 
-#### Blockchain
-- **Custom Implementation** - Educational blockchain
-- **SHA-256** - Cryptographic hashing
-- **Proof-of-Work** - Consensus mechanism
+3. **Type Checking**
+   ```bash
+   pnpm check-types
+   ```
 
-#### Monorepo
-- **Turborepo** - Build system
-- **pnpm** - Package manager
-- **TypeScript** - Shared types
+4. **Build for Production**
+   ```bash
+   pnpm build
+   ```
 
-## 🔐 Security Features
+## 📡 API Documentation
 
-1. **Password Security**: bcrypt hashing with 10 rounds
-2. **JWT Authentication**: Secure token-based auth with expiration
-3. **Vote Anonymity**: Hashed voter IDs in blockchain
-4. **Immutable Records**: Blockchain prevents vote tampering
-5. **Double-Vote Prevention**: Database tracking of voting status
-6. **Input Validation**: Comprehensive request validation
-7. **CORS Protection**: Configured for specific origins
+### Authentication Endpoints
 
-## 📊 API Endpoints
+```
+POST /api/auth/register    # Register new voter
+POST /api/auth/login       # Login and receive JWT token
+```
 
-### Authentication
-- `POST /api/auth/register` - Register new voter
-- `POST /api/auth/login` - Login and receive JWT
+### Election Management
 
-### Elections
-- `GET /api/elections` - List all elections
-- `GET /api/elections/:id` - Get election details
-- `POST /api/elections` - Create election (admin)
-- `GET /api/elections/:id/results` - Get results
+```
+GET    /api/elections           # List all elections
+GET    /api/elections/:id       # Get election details
+POST   /api/elections           # Create election (Admin/Officer)
+PUT    /api/elections/:id       # Update election (Admin/Officer)
+DELETE /api/elections/:id       # Delete election (Admin)
+GET    /api/elections/:id/results # Get election results
+```
+
+### Candidate Management
+
+```
+GET    /api/candidates                    # List all candidates
+POST   /api/candidates                    # Register candidate (Admin/Officer)
+GET    /api/elections/:id/candidates      # Get candidates for election
+```
 
 ### Voting
-- `POST /api/vote` - Cast a vote
-- `GET /api/vote/verify/:hash` - Verify vote receipt
+
+```
+POST /api/vote                 # Cast a vote (Voter)
+GET  /api/vote/verify/:hash    # Verify vote receipt
+GET  /api/vote/status/:electionId # Check voting status
+```
 
 ### Blockchain
-- `GET /api/blockchain` - Get entire chain
-- `GET /api/blockchain/validate` - Validate chain integrity
-- `GET /api/blockchain/block/:index` - Get specific block
+
+```
+GET /api/blockchain              # Get entire blockchain
+GET /api/blockchain/validate     # Validate chain integrity
+GET /api/blockchain/block/:index # Get specific block
+```
+
+### User Management (Admin Only)
+
+```
+GET    /api/users           # List all users
+PUT    /api/users/:id/role  # Update user role
+DELETE /api/users/:id       # Delete user
+```
+
+For detailed API documentation with request/response examples, see the [Setup Guide](./SETUP_GUIDE.md).
 
 ## 🧪 Testing
+
+The system includes comprehensive testing capabilities:
+
+- **Unit Tests** - Test individual components and functions
+- **Integration Tests** - Test API endpoints and service interactions
+- **Security Tests** - Verify RBAC and authentication mechanisms
+- **Blockchain Tests** - Validate chain integrity and consensus
 
 ```bash
 # Run tests (when implemented)
@@ -246,68 +302,100 @@ pnpm test:watch
 pnpm test:coverage
 ```
 
-## 📈 Roadmap
-
-- [ ] Implement comprehensive test suite
-- [ ] Add database persistence (PostgreSQL/MongoDB)
-- [ ] Multi-node blockchain network
-- [ ] Smart contract integration
-- [ ] Mobile application (React Native)
-- [ ] Biometric authentication
-- [ ] Advanced analytics dashboard
-- [ ] Email notifications
-- [ ] Admin dashboard UI
-- [ ] Audit logging system
-
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Please follow these guidelines:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. **Fork the Repository**
+   ```bash
+   git clone <your-fork-url>
+   cd voting-chain
+   ```
 
-## 📝 License
+2. **Create a Feature Branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+3. **Make Your Changes**
+   - Follow the existing code style
+   - Add tests for new features
+   - Update documentation as needed
+
+4. **Commit Your Changes**
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+
+5. **Push to Your Fork**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+
+6. **Open a Pull Request**
+   - Provide a clear description of changes
+   - Reference any related issues
+   - Ensure all tests pass
+
+### Code Standards
+
+- **TypeScript** - Use strict type checking
+- **ESLint** - Follow configured linting rules
+- **Prettier** - Format code consistently
+- **Comments** - Document complex logic
+- **Tests** - Write tests for new features
+
+## 📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
-- Built with [Turborepo](https://turborepo.dev/)
-- Inspired by blockchain voting systems research
+- Built with [Turborepo](https://turborepo.dev/) for efficient monorepo management
+- Inspired by blockchain voting systems research and best practices
 - Community feedback and contributions
 
-## 📋 Detailed Task Breakdown
+## 📞 Support & Resources
 
-For implementation, see the detailed task files in [`/tasks/`](./tasks/):
+### Documentation
+- [Setup Guide](./SETUP_GUIDE.md) - Installation and configuration
+- [Frontend Setup](./FRONTEND_SETUP.md) - Frontend development guide
+- [Architecture](./ARCHITECTURE.md) - System design and architecture
 
-- **[Task Overview](./tasks/README.md)** - Master task index with timeline
-- **[Blockchain Service Tasks](./tasks/BLOCKCHAIN_SERVICE_TASKS.md)** - 6 tasks, ~9.5 hours
-- **[Types Package Tasks](./tasks/TYPES_PACKAGE_TASKS.md)** - 10 tasks, ~7.5 hours
-- **[API Service Tasks](./tasks/API_SERVICE_TASKS.md)** - 15 tasks, ~22 hours
-- **[Frontend Service Tasks](./tasks/FRONTEND_SERVICE_TASKS.md)** - 20 tasks, ~40 hours
-
-**Total Estimated Effort**: ~95 hours (12-17 days)
-
-## 📞 Support
-
-For questions and support:
-- Check the detailed task files in [`/tasks/`](./tasks/)
-- Review the [Architecture Guide](./ARCHITECTURE.md)
-- Follow the [Setup Guide](./SETUP_GUIDE.md)
-- Use the [Implementation Guide](./IMPLEMENTATION_GUIDE.md)
-
-## 🔗 Useful Links
-
+### External Resources
 - [Turborepo Documentation](https://turborepo.dev/docs)
 - [React Documentation](https://react.dev/)
 - [Express.js Guide](https://expressjs.com/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [shadcn/ui Documentation](https://ui.shadcn.com/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+## ⚠️ Important Notes
+
+**Educational Purpose**: This is an educational project demonstrating blockchain concepts and secure voting system architecture. For production deployment, additional considerations are required:
+
+- **Database Persistence** - Implement persistent storage (PostgreSQL/MongoDB)
+- **Scalability** - Configure for high-traffic scenarios
+- **Compliance** - Ensure compliance with local election laws and regulations
+- **Security Hardening** - Conduct professional security audits
+- **Backup & Recovery** - Implement robust backup strategies
+- **Monitoring** - Set up comprehensive logging and monitoring
+- **Testing** - Extensive testing including penetration testing
+
+## 🗺️ Roadmap
+
+Future enhancements planned for the system:
+
+- [ ] Database persistence layer (PostgreSQL/MongoDB)
+- [ ] Multi-node blockchain network with consensus
+- [ ] Advanced analytics and reporting dashboard
+- [ ] Email notifications for election events
+- [ ] Mobile application (React Native)
+- [ ] Biometric authentication support
+- [ ] Smart contract integration
+- [ ] Enhanced admin dashboard with user management UI
+- [ ] Automated backup and recovery system
+- [ ] Performance optimization for large-scale elections
 
 ---
 
-**Note**: This is an educational project demonstrating blockchain concepts. For production use, additional security measures, testing, and compliance considerations are required.
+**Built with ❤️ using TypeScript, React, and Blockchain Technology**
