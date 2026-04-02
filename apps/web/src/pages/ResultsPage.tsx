@@ -4,6 +4,7 @@ import { api } from '../lib/api';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import type { Election, ElectionResults } from '@voting-chain/types';
+import { WebSocketEvent } from '@voting-chain/types';
 
 export default function ResultsPage() {
   const { id: electionId } = useParams<{ id: string }>();
@@ -14,43 +15,72 @@ export default function ResultsPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    loadResults();
-    
-    // Set up WebSocket for real-time updates
-    const ws = new WebSocket('ws://localhost:3001');
-    
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.event === 'VOTE_CAST' && data.payload?.electionId === electionId) {
-        loadResults();
+    if (!electionId) return;
+
+    const loadResultsData = async () => {
+      try {
+        setLoading(true);
+        setError('');
+
+        const [electionData, resultsData] = await Promise.all([
+          api.getElection(electionId),
+          api.getResults(electionId),
+        ]);
+
+        setElection(electionData);
+        setResults(resultsData);
+      } catch (err: any) {
+        setError(err.response?.data?.error || 'Failed to load results');
+      } finally {
+        setLoading(false);
       }
     };
 
-    return () => {
-      ws.close();
+    loadResultsData();
+
+    const ws = new WebSocket('ws://localhost:3001');
+
+    ws.onopen = () => {
+      console.log('WebSocket connected to results page');
     };
-  }, [electionId]);
 
-  const loadResults = async () => {
-    if (!electionId) return;
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
 
-    try {
-      setLoading(true);
-      setError('');
+      if (
+        ws.readyState === WebSocket.OPEN &&
+        data.event === WebSocketEvent.VOTE_CAST &&
+        data.payload?.electionId === electionId
+      ) {
+        console.log('Vote cast event received, refreshing results');
+        loadResultsData();
+      }
 
-      const [electionData, resultsData] = await Promise.all([
-        api.getElection(electionId),
-        api.getResults(electionId),
-      ]);
+      if (
+        ws.readyState === WebSocket.OPEN &&
+        data.event === WebSocketEvent.RESULTS_UPDATED &&
+        data.payload?.electionId === electionId
+      ) {
+        console.log('Results updated event received, refreshing results');
+        loadResultsData();
+      }
+    };
 
-      setElection(electionData);
-      setResults(resultsData);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to load results');
-    } finally {
-      setLoading(false);
-    }
-  };
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    return () => {
+      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        ws.close();
+      }
+    };
+  }, []);
+
 
   const getStatusBadge = (status: string) => {
     const styles = {

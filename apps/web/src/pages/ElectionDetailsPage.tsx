@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Calendar, Users, ArrowLeft, UserPlus, TrendingUp, Play, StopCircle, Shield } from 'lucide-react';
 import type { Election, Candidate } from '@voting-chain/types';
+import { WebSocketEvent } from '@voting-chain/types';
 import { format } from 'date-fns';
 
 export default function ElectionDetailsPage() {
@@ -20,27 +21,70 @@ export default function ElectionDetailsPage() {
   const isAuthenticated = authStore.isAuthenticated;
 
   useEffect(() => {
-    if (id) {
-      loadElectionData();
-    }
-  }, [id]);
+    if (!id) return;
 
-  const loadElectionData = async () => {
-    try {
-      const [electionData, candidatesData] = await Promise.all([
-        electionsApi.getById(id!),
-        candidatesApi.getByElection(id!),
-      ]);
-      setElection(electionData);
-      setCandidates(candidatesData);
-      setError('');
-    } catch (err) {
-      console.error('Failed to load election data', err);
-      setError('Failed to load election data');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const loadElectionDetailsData = async () => {
+      try {
+        const [electionData, candidatesData] = await Promise.all([
+          electionsApi.getById(id),
+          candidatesApi.getByElection(id),
+        ]);
+        setElection(electionData);
+        setCandidates(candidatesData);
+        setError('');
+      } catch (err) {
+        console.error('Failed to load election data', err);
+        setError('Failed to load election data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadElectionDetailsData();
+
+    const ws = new WebSocket('ws://localhost:3001');
+
+    ws.onopen = () => {
+      console.log('WebSocket connected to election details page');
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (
+        ws.readyState === WebSocket.OPEN &&
+        data.event === WebSocketEvent.ELECTION_STARTED &&
+        data.payload?.electionId === id
+      ) {
+        console.log('Election started event received, refreshing data');
+        loadElectionDetailsData();
+      }
+
+      if (
+        ws.readyState === WebSocket.OPEN &&
+        data.event === WebSocketEvent.ELECTION_ENDED &&
+        data.payload?.electionId === id
+      ) {
+        console.log('Election ended event received, refreshing data');
+        loadElectionDetailsData();
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    return () => {
+      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        ws.close();
+      }
+    };
+  }, []);
+
 
   const handleActivateElection = async () => {
     if (!election || !id) return;
@@ -54,7 +98,13 @@ export default function ElectionDetailsPage() {
       setUpdating(true);
       setError('');
       await electionsApi.updateStatus(id, 'active');
-      await loadElectionData();
+      const [electionData, candidatesData] = await Promise.all([
+        electionsApi.getById(id),
+        candidatesApi.getByElection(id),
+      ]);
+      setElection(electionData);
+      setCandidates(candidatesData);
+      setError('');
     } catch (err: any) {
       if (err.response?.status === 403) {
         setError('Only the election creator can activate this election');
@@ -73,7 +123,13 @@ export default function ElectionDetailsPage() {
       setUpdating(true);
       setError('');
       await electionsApi.updateStatus(id, 'closed');
-      await loadElectionData();
+      const [electionData, candidatesData] = await Promise.all([
+        electionsApi.getById(id),
+        candidatesApi.getByElection(id),
+      ]);
+      setElection(electionData);
+      setCandidates(candidatesData);
+      setError('');
     } catch (err: any) {
       if (err.response?.status === 403) {
         setError('Only the election creator can close this election');

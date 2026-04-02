@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Calendar, Users, Plus, TrendingUp } from 'lucide-react';
 import type { Election } from '@voting-chain/types';
+import { WebSocketEvent } from '@voting-chain/types';
 import { format } from 'date-fns';
 
 export default function ElectionsPage() {
@@ -15,19 +16,59 @@ export default function ElectionsPage() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
-    loadElections();
+    const loadElectionsData = async () => {
+      try {
+        const data = await electionsApi.getAll();
+        setElections(data);
+      } catch (err: any) {
+        setError('Failed to load elections');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadElectionsData();
+
+    const ws = new WebSocket('ws://localhost:3001');
+
+    ws.onopen = () => {
+      console.log('WebSocket connected to elections page');
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (ws.readyState === WebSocket.OPEN && data.event === WebSocketEvent.ELECTION_CREATED) {
+        console.log('Election created event received, refreshing list');
+        loadElectionsData();
+      }
+
+      if (ws.readyState === WebSocket.OPEN && data.event === WebSocketEvent.ELECTION_STARTED) {
+        console.log('Election started event received, refreshing list');
+        loadElectionsData();
+      }
+
+      if (ws.readyState === WebSocket.OPEN && data.event === WebSocketEvent.ELECTION_ENDED) {
+        console.log('Election ended event received, refreshing list');
+        loadElectionsData();
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    return () => {
+      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        ws.close();
+      }
+    };
   }, []);
 
-  const loadElections = async () => {
-    try {
-      const data = await electionsApi.getAll();
-      setElections(data);
-    } catch (err: any) {
-      setError('Failed to load elections');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getStatusBadge = (status: string) => {
     const styles = {

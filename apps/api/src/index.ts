@@ -15,10 +15,7 @@ const app = express();
 const server = createServer(app);
 
 // Middleware
-app.use(cors({
-  origin: config.cors.origin,
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -61,9 +58,6 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-// Initialize WebSocket server
-websocketService.initialize(server);
-
 // Start server with error handling
 server.listen(config.port, () => {
   console.log('='.repeat(50));
@@ -73,7 +67,16 @@ server.listen(config.port, () => {
   console.log(`🌍 Environment: ${config.nodeEnv}`);
   console.log(`🔗 CORS origin: ${config.cors.origin}`);
   console.log(`⛓️  Blockchain difficulty: ${config.blockchain.difficulty}`);
-  console.log(`🔌 WebSocket server initialized`);
+  
+  // Initialize WebSocket server AFTER HTTP server is listening
+  try {
+    websocketService.initialize(server);
+    console.log(`🔌 WebSocket server initialized at ws://localhost:${config.port}`);
+  } catch (error) {
+    console.error('❌ Failed to initialize WebSocket server:', error);
+    console.error('WebSocket functionality will not be available');
+  }
+  
   console.log('='.repeat(50));
   console.log(`\n✅ Ready to accept connections at http://localhost:${config.port}`);
   console.log(`📚 API Documentation: http://localhost:${config.port}/health\n`);
